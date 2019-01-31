@@ -42,62 +42,135 @@
         <!-- Do not transfor images unless width and height are correctly specified -->
       </xsl:when>
       <xsl:otherwise>
-        <w:drawing>
-          <wp:inline distT="0" distB="0" distL="0" distR="0">
-            <wp:extent>
-              <xsl:call-template name="image-dimention-attributes"/>
-            </wp:extent>
-            <wp:effectExtent l="0" t="0" r="0" b="0"/>
-            <wp:docPr>
-              <xsl:attribute name="id"><xsl:value-of select="count(preceding::img)+1" /></xsl:attribute>
-              <xsl:attribute name="name">Picture <xsl:value-of select="count(preceding::img)+1" /></xsl:attribute>
-            </wp:docPr>
-            <wp:cNvGraphicFramePr>
-              <a:graphicFrameLocks noChangeAspect="1"/>
-            </wp:cNvGraphicFramePr>
-            <a:graphic>
-              <a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">
-                <pic:pic>
-                  <pic:nvPicPr>
-                    <pic:cNvPr>
-                      <xsl:attribute name="id"><xsl:value-of select="count(preceding::img)+1" /></xsl:attribute>
-                      <xsl:attribute name="title"><xsl:value-of select="@alt" /></xsl:attribute>
-                      <xsl:attribute name="name"><xsl:call-template name="image-name">
-                        <xsl:with-param name="source" select="@src"/>
-                        <xsl:with-param name="data-filename" select="@data-filename"/>
-                      </xsl:call-template></xsl:attribute>
-                    </pic:cNvPr>
-                    <pic:cNvPicPr/>
-                  </pic:nvPicPr>
-                  <pic:blipFill>
-                    <a:blip>
-                      <xsl:attribute name="r:embed"><xsl:call-template name="relationship-id"/></xsl:attribute>
-                      <a:extLst>
-                        <a:ext uri="{{28A0092B-C50C-407E-A947-70E740481C1C}}">
-                          <a14:useLocalDpi val="0"/>
+        <xsl:variable name="drawing_name">
+          <w:drawing>
+            <wp:inline distT="0" distB="0" distL="0" distR="0">
+              <wp:extent>
+                <xsl:call-template name="image-dimention-attributes"/>
+              </wp:extent>
+              <wp:effectExtent l="0" t="0" r="0" b="0"/>
+              <wp:docPr>
+                <xsl:attribute name="id"><xsl:value-of select="count(preceding::img)+1" /></xsl:attribute>
+                <xsl:attribute name="name">Picture <xsl:value-of select="count(preceding::img)+1" /></xsl:attribute>
+              </wp:docPr>
+              <wp:cNvGraphicFramePr>
+                <a:graphicFrameLocks noChangeAspect="1"/>
+              </wp:cNvGraphicFramePr>
+              <a:graphic>
+                <a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">
+                  <pic:pic>
+                    <pic:nvPicPr>
+                      <pic:cNvPr>
+                        <xsl:attribute name="id"><xsl:value-of select="count(preceding::img)+1" /></xsl:attribute>
+                        <xsl:attribute name="title"><xsl:value-of select="@alt" /></xsl:attribute>
+                        <xsl:attribute name="name"><xsl:call-template name="image-name">
+                          <xsl:with-param name="source" select="@src"/>
+                          <xsl:with-param name="data-filename" select="@data-filename"/>
+                        </xsl:call-template></xsl:attribute>
+                      </pic:cNvPr>
+                      <pic:cNvPicPr/>
+                    </pic:nvPicPr>
+                    <pic:blipFill>
+                      <a:blip>
+                        <xsl:attribute name="r:embed"><xsl:call-template name="relationship-id"/></xsl:attribute>
+                        <a:extLst>
+                          <a:ext uri="{{28A0092B-C50C-407E-A947-70E740481C1C}}">
+                            <a14:useLocalDpi val="0"/>
+                          </a:ext>
+                        </a:extLst>
+                      </a:blip>
+                      <a:stretch>
+                        <a:fillRect/>
+                      </a:stretch>
+                    </pic:blipFill>
+                    <pic:spPr>
+                      <a:xfrm>
+                        <a:off x="0" y="0"/>
+                        <a:ext>
+                          <xsl:call-template name="image-dimention-attributes"/>
                         </a:ext>
-                      </a:extLst>
-                    </a:blip>
-                    <a:stretch>
-                      <a:fillRect/>
-                    </a:stretch>
-                  </pic:blipFill>
-                  <pic:spPr>
-                    <a:xfrm>
-                      <a:off x="0" y="0"/>
-                      <a:ext>
-                        <xsl:call-template name="image-dimention-attributes"/>
-                      </a:ext>
-                    </a:xfrm>
-                    <a:prstGeom prst="rect">
-                      <a:avLst/>
-                    </a:prstGeom>
-                  </pic:spPr>
-                </pic:pic>
-              </a:graphicData>
-            </a:graphic>
-          </wp:inline>
-        </w:drawing>
+                      </a:xfrm>
+                      <a:prstGeom prst="rect">
+                        <a:avLst/>
+                      </a:prstGeom>
+                    </pic:spPr>
+                  </pic:pic>
+                </a:graphicData>
+              </a:graphic>
+            </wp:inline>
+          </w:drawing>
+        </xsl:variable>
+        <xsl:choose>
+          <xsl:when test="not(@data-caption)">
+            <!-- Do not transfor images unless width and height are correctly specified -->
+            <xsl:copy-of select="$drawing_name"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <w:p>
+              <w:r>
+                <xsl:copy-of select="$drawing_name"/>
+              </w:r>
+            </w:p>
+            <w:p>
+              <w:pPr>
+                <w:pStyle w:val="nfasisintenso"/>
+                <w:rPr>
+                  <w:rStyle w:val="nfasisintenso"/>
+                </w:rPr>
+              </w:pPr>
+              <w:proofErr w:type="spellStart"/>
+              <w:r>
+                <w:rPr>
+                  <w:rStyle w:val="nfasisintenso"/>
+                </w:rPr>
+                <w:t>Figure</w:t>
+              </w:r>
+              <w:proofErr w:type="spellEnd"/>
+              <w:r>
+                <w:rPr>
+                  <w:rStyle w:val="nfasisintenso"/>
+                </w:rPr>
+              </w:r>
+              <w:r>
+                <w:rPr>
+                  <w:rStyle w:val="nfasisintenso"/>
+                </w:rPr>
+                <w:fldChar w:fldCharType="begin"/>
+              </w:r>
+              <w:r>
+                <w:rPr>
+                  <w:rStyle w:val="nfasisintenso"/>
+                </w:rPr>
+                <w:instrText xml:space="preserve"> SEQ Ilustración \* ARABIC </w:instrText>
+              </w:r>
+              <w:r>
+                <w:rPr>
+                  <w:rStyle w:val="nfasisintenso"/>
+                </w:rPr>
+                <w:fldChar w:fldCharType="separate"/>
+              </w:r>
+              <w:r>
+                <w:rPr>
+                  <w:rStyle w:val="nfasisintenso"/>
+                </w:rPr>
+                <w:t xml:space="preserve"> <xsl:value-of select="count(preceding::img)+1" /> </w:t>
+              </w:r>
+              <w:r>
+                <w:rPr>
+                  <w:rStyle w:val="nfasisintenso"/>
+                </w:rPr>
+                <w:fldChar w:fldCharType="end"/>
+              </w:r>
+              <w:r>
+                <w:rPr>
+                  <w:rStyle w:val="nfasisintenso"/>
+                </w:rPr>
+                <w:t xml:space="preserve"><xsl:value-of select="@data-caption"/></w:t>
+              </w:r>
+            </w:p>
+          </xsl:otherwise>
+        </xsl:choose>
+
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -134,3 +207,4 @@
     </xsl:attribute>
   </xsl:template>
 </xsl:stylesheet>
+
