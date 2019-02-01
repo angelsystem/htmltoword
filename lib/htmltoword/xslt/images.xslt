@@ -102,72 +102,73 @@
         </xsl:variable>
         <xsl:choose>
           <xsl:when test="not(@data-caption)">
-            <!-- Do not transfor images unless width and height are correctly specified -->
             <xsl:copy-of select="$drawing_name"/>
           </xsl:when>
           <xsl:otherwise>
-            <w:p>
-              <w:r>
-                <xsl:copy-of select="$drawing_name"/>
-              </w:r>
-            </w:p>
-            <w:p>
-              <w:pPr>
-                <w:pStyle w:val="nfasisintenso"/>
-                <w:rPr>
-                  <w:rStyle w:val="nfasisintenso"/>
-                </w:rPr>
-              </w:pPr>
-              <w:proofErr w:type="spellStart"/>
-              <w:r>
-                <w:rPr>
-                  <w:rStyle w:val="nfasisintenso"/>
-                </w:rPr>
-                <w:t>Figure</w:t>
-              </w:r>
-              <w:proofErr w:type="spellEnd"/>
-              <w:r>
-                <w:rPr>
-                  <w:rStyle w:val="nfasisintenso"/>
-                </w:rPr>
-              </w:r>
-              <w:r>
-                <w:rPr>
-                  <w:rStyle w:val="nfasisintenso"/>
-                </w:rPr>
-                <w:fldChar w:fldCharType="begin"/>
-              </w:r>
-              <w:r>
-                <w:rPr>
-                  <w:rStyle w:val="nfasisintenso"/>
-                </w:rPr>
-                <w:instrText xml:space="preserve"> SEQ Ilustración \* ARABIC </w:instrText>
-              </w:r>
-              <w:r>
-                <w:rPr>
-                  <w:rStyle w:val="nfasisintenso"/>
-                </w:rPr>
-                <w:fldChar w:fldCharType="separate"/>
-              </w:r>
-              <w:r>
-                <w:rPr>
-                  <w:rStyle w:val="nfasisintenso"/>
-                </w:rPr>
-                <w:t xml:space="preserve"> <xsl:value-of select="count(preceding::img)+1" /> </w:t>
-              </w:r>
-              <w:r>
-                <w:rPr>
-                  <w:rStyle w:val="nfasisintenso"/>
-                </w:rPr>
-                <w:fldChar w:fldCharType="end"/>
-              </w:r>
-              <w:r>
-                <w:rPr>
-                  <w:rStyle w:val="nfasisintenso"/>
-                </w:rPr>
-                <w:t xml:space="preserve"><xsl:value-of select="@data-caption"/></w:t>
-              </w:r>
-            </w:p>
+            <w:r>
+              <w:p>
+                <w:r>
+                  <xsl:copy-of select="$drawing_name"/>
+                </w:r>
+              </w:p>
+              <w:p>
+                <w:pPr>
+                  <w:pStyle w:val="nfasisintenso"/>
+                  <w:rPr>
+                    <w:rStyle w:val="nfasisintenso"/>
+                  </w:rPr>
+                </w:pPr>
+                <w:proofErr w:type="spellStart"/>
+                <w:r>
+                  <w:rPr>
+                    <w:rStyle w:val="nfasisintenso"/>
+                  </w:rPr>
+                  <w:t>Figure</w:t>
+                </w:r>
+                <w:proofErr w:type="spellEnd"/>
+                <w:r>
+                  <w:rPr>
+                    <w:rStyle w:val="nfasisintenso"/>
+                  </w:rPr>
+                </w:r>
+                <w:r>
+                  <w:rPr>
+                    <w:rStyle w:val="nfasisintenso"/>
+                  </w:rPr>
+                  <w:fldChar w:fldCharType="begin"/>
+                </w:r>
+                <w:r>
+                  <w:rPr>
+                    <w:rStyle w:val="nfasisintenso"/>
+                  </w:rPr>
+                  <w:instrText xml:space="preserve"> SEQ Ilustración \* ARABIC </w:instrText>
+                </w:r>
+                <w:r>
+                  <w:rPr>
+                    <w:rStyle w:val="nfasisintenso"/>
+                  </w:rPr>
+                  <w:fldChar w:fldCharType="separate"/>
+                </w:r>
+                <w:r>
+                  <w:rPr>
+                    <w:rStyle w:val="nfasisintenso"/>
+                  </w:rPr>
+                  <w:t xml:space="preserve"> <xsl:value-of select="count(preceding::img)+1" /> </w:t>
+                </w:r>
+                <w:r>
+                  <w:rPr>
+                    <w:rStyle w:val="nfasisintenso"/>
+                  </w:rPr>
+                  <w:fldChar w:fldCharType="end"/>
+                </w:r>
+                <w:r>
+                  <w:rPr>
+                    <w:rStyle w:val="nfasisintenso"/>
+                  </w:rPr>
+                  <w:t xml:space="preserve"><xsl:value-of select="@data-caption"/></w:t>
+                </w:r>
+              </w:p>
+            </w:r>
           </xsl:otherwise>
         </xsl:choose>
 
