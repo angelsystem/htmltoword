@@ -147,7 +147,7 @@
                   <w:pStyle w:val="Caption"/>
                 </w:pPr>
                 <w:r>
-                  <w:t xml:space="preserve">Figurita </w:t>
+                  <w:t xml:space="preserve">Figure </w:t>
                 </w:r>
                 <w:r>
                   <w:fldChar w:fldCharType="begin"/>
